@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<head>
+  <link rel="stylesheet" href="index.css" />
+</head>
+
+<body>
+  <header id="header">
+    <header id="logo"></header>
+  </header>
+  <div class="background-container">
+    <div class="wrap">
+      <div id="glass">
+        <div class="season-countdown">
+          <h1>COUNTDOWN TO HELLDIVERS 2 WARBOUND CUTTING EDGE</h1>
+
+          <div
+            style="
+              position: relative;
+              height: 24px;
+              max-width: 580px;
+              margin: 17px auto;
+              background: rgba(0, 0, 0, 0.5);
+              border: 3px solid #000;
+              border-radius: 18px;
+            "
+          >
+            <div
+              style="
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 2%;
+                height: 100%;
+                background: -webkit-gradient(
+                  linear,
+                  left top,
+                  right top,
+                  from(hsl(221, 70%, 55.5%)),
+                  color-stop(34%, hsl(269, 83.8%, 71%)),
+                  color-stop(67%, hsl(221, 70%, 55.5%)),
+                  to(hsl(269, 83.8%, 71%))
+                );
+                background: linear-gradient(
+                  90deg,
+                  hsl(221, 70%, 55.5%),
+                  hsl(269, 83.8%, 71%) 34%,
+                  hsl(221, 70%, 55.5%) 67%,
+                  hsl(269, 83.8%, 71%)
+                );
+                background-size: 300% 100%;
+                -webkit-animation: progress-anim 2s linear infinite;
+                animation: progress-anim 2s linear infinite;
+                border-radius: 18px;
+
+                transition: width 1s linear;
+              "
+              id="progress-bar"
+            ></div>
+          </div>
+
+          <div id="countdown-container"></div>
+
+          <script>
+            // Set the launch date and time (March 14, 2024)
+            const launchDate = new Date("March 14, 2024 00:00:00").getTime()
+
+            // Retrieve the initial countdown time from localStorage or set a default value
+            const initialCountdownString =
+              localStorage.getItem("initialCountdown") || `${launchDate}`
+
+            // Parse the components of the initial countdown time string
+            const initialCountdown = parseInt(initialCountdownString, 10)
+
+            // Update the countdown and progress bar every 1 second
+            const x = setInterval(function () {
+              // Get the current date and time
+              const now = new Date().getTime()
+
+              // Calculate the remaining time
+              const distance = initialCountdown - now
+
+              // Calculate days, hours, minutes, and seconds
+              const remainingDays = Math.floor(distance / (1000 * 60 * 60 * 24))
+              const remainingHours = Math.floor(
+                (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+              )
+              const remainingMinutes = Math.floor(
+                (distance % (1000 * 60 * 60)) / (1000 * 60)
+              )
+              const remainingSeconds = Math.floor(
+                (distance % (1000 * 60)) / 1000
+              )
+
+              // Display the countdown
+              document.getElementById(
+                "countdown-container"
+              ).innerHTML = `${remainingDays}d ${remainingHours}h ${remainingMinutes}m ${remainingSeconds}s `
+
+              // Update the progress bar
+              const progressBar = document.getElementById("progress-bar")
+              const totalTime = launchDate - initialCountdown
+              const elapsedTime = initialCountdown - now
+              const progressPercentage =
+                ((totalTime - elapsedTime) / totalTime) * 100
+              progressBar.style.width = `${progressPercentage}%`
+
+              // If the countdown is over, display a message and clear localStorage
+              if (distance < 0) {
+                clearInterval(x)
+                document.getElementById("countdown-container").innerHTML =
+                  "Launch has occurred!"
+                localStorage.removeItem("initialCountdown")
+              }
+            }, 1000)
+
+            // Store the initial countdown time in localStorage
+            localStorage.setItem("initialCountdown", `${launchDate}`)
+          </script>
+
+          <div class="endtext1">
+            <h3>
+              Arriving on
+              <span style="color: #2cc9e8">Thursday, March 14, 2024</span>
+            </h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
